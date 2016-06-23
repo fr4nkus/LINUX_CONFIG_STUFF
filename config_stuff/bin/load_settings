@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# Try to determine where this start up is being called from and 
+# introduce the appropriate variables.
+
+NAME='unknown'
+ARCHITECTURE='unknown'
+OS='unknown'
+LOCATION='unknown'
+
+function log_debug {
+  echo DEBUG: $@
+}
+
+function file_is_ok {
+
+  FILE=$1
+
+  if [ "X$FILE" != "X" ] && [ -e $FILE ]
+  then
+    return 1
+  else
+    return 0
+  fi
+}
+
+function file_is_executeable {
+  FILE=$1
+
+  # TODO collate these if statements.
+  if file_is_ok $FILE
+  then
+    if [ -x $FILE ] ; then 
+      return 1
+    fi
+  fi
+
+  return 0
+}
+
+function safe_run {
+  CMD=$1
+  # http://www.tldp.org/LDP/abs/html/string-manipulation.html
+  FILE=${CMD%% .*} # Remove everything after the first space.
+  SAFE_RUN_RESULT=''
+
+  if file_is_executeable $FILE
+  then
+    SAFE_RUN_RESULT=$($CMD)
+    return $?
+  else
+    return 0
+  fi
+}
+
+# What machine am I using?
+safe_run '/bin/hostname'
+NAME=$SAFE_RUN_RESULT
+
+# What architecture am I using?
+safe_run '/usr/bin/arch'
+
+case $SAFE_RUN_RESULT in
+  armv61) ARCHITECTURE="raspberry_pi" # it's a pi!
+    ;;
+  *) ARCHITECTURE=$SAFE_RUN_RESULT
+    ;;
+esac
+
+# What operating system am I running?
+OS=$(grep -s .* /etc/debian_version /etc/mydistro)
+
+# Am I on a network?
+safe_run '/sbin/ifconfig' #-a \| grep Bcast'
+BCAST=${SAFE_RUN_RESULT}
+
+echo "$NAME is running $OS on $ARCHITECTURE"  
+echo "Connected to $BCAST"

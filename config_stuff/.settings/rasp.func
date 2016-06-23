@@ -1,0 +1,34 @@
+#!/usr/bin/env bash 
+
+function test_sound {
+    sudo aplay /usr/share/sounds/alsa/Front_Center.wav
+}
+
+function set_volume {
+    sudo amixer -c 0 cset numid=1 $1
+}
+
+function set_audio {
+
+    # TODO set the volume levels to negative numbers once this bug is 
+    # fixed in this release of the alsa software:
+    # https://bugs.launchpad.net/ubuntu/+source/alsa-utils/+bug/1078233
+
+    # Default values
+    TYPE=0 # automatic
+    VOLUME=0 # quiet mode
+
+    case $1 in
+      phones,dvi,dvix,d)
+        TYPE=1
+        VOLUME=100
+        ;;
+      hdmi,h)
+        TYPE=2
+        VOLUME=0
+        ;;
+    esac
+
+	sudo amixer -c 0 cset numid=3 $TYPE
+    set_volume $VOLUME
+}

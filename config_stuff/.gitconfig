@@ -1,0 +1,11 @@
+[user]
+	name = Frank Booth
+	email = frankus@gmail.com
+[alias]
+	st=status
+	co=checkout
+	br=branch
+	up=rebase
+	ci=commit
+[global]
+	editor=vim

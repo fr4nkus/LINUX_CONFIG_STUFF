@@ -1,0 +1,18 @@
+/*
+ * Holiday
+ *
+ * $FreeBSD$
+ */
+
+#ifndef _calendar_holiday_
+#define _calendar_holiday_
+
+LANG=UTF-8
+
+01/01	New Year's Day
+Easter-2 Good Friday Bank Holiday
+Easter+1 Early May Bank Holiday
+05/MonLast	Late May Bank Holiday
+08/MonLast	Summer Bank Holiday
+25/12	Christmas Day
+26/12	Boxing Day

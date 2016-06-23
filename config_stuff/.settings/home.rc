@@ -1,0 +1,1 @@
+mount -t cifs -o username=admin,password=$(retr_passwd mybook) //mybook/public /mnt

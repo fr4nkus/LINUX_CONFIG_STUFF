@@ -1,0 +1,13 @@
+/*
+ * Frank's Personal Calendar.
+ */
+
+#ifndef _calendar_frank_
+#define _calendar_frank_
+
+LANG=UTF-8
+
+01/07	Frank Bristo's Birthday, 1942
+01/08	Frank Bristo's Birthday, 1942
+01/20	Theo Booth's Birthday, 2010
+02/01	Eleanor Bentley's Birthday, 1987
